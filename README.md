@@ -122,3 +122,15 @@ It is cheaper to use named return variables and remove explicit `return` stateme
 -    return owners;
 }
 ```
+
+### #8 Use External Instead Of Public Functions: NOT EFFECTIVE ###
+Marking a `public` function as `external` appears to have no effect on gas costs:
+```solidity
+// both implementations cost the same gas
+function resetId(uint256 id) external {
+    idToOwner[id] = address(0);
+}
+function resetId(uint256 id) public {
+    idToOwner[id] = address(0);
+}
+```
