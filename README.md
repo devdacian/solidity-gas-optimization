@@ -28,11 +28,8 @@ If a variable (especially a storage variable) can be initialized past its defaul
 ```diff
 contract IdRegUnop is IIdReg {
     // next available id
-    uint256 public nextId;
-
-+   constructor() {
-+       nextId = 1;
-+   }
+-   uint256 public nextId;
++   uint256 public nextId = 1;
 ```
 
 ### #3 Prefer Calldata For Array Inputs: EFFECTIVE 0.22% CHEAPER ###
