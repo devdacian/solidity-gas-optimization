@@ -24,7 +24,7 @@ But testing shows this suggestion is not cheaper regardless of whether the optim
 
 ### #2 Initialize Past Default Value: EFFECTIVE 12% CHEAPER ###
 
-If a variable (especially a storage variable) can be initialized past its default value, this offers significantly cheaper gas costs:
+If a variable (especially a storage variable) can be initialized past its default value, this offers significantly cheaper gas cost in the function call that would subsequently change it:
 ```diff
 contract IdRegUnop is IIdReg {
     // next available id
