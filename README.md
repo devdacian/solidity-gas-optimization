@@ -24,7 +24,16 @@ But testing shows this suggestion is not cheaper regardless of whether the optim
 
 ### #2 Initialize Past Default Value: EFFECTIVE 12% CHEAPER ###
 
-If a variable (especially a storage variable) can be initialized past its default value, this offers significantly cheaper gas costs and can also simplify code.
+If a variable (especially a storage variable) can be initialized past its default value, this offers significantly cheaper gas costs:
+```diff
+contract IdRegUnop is IIdReg {
+    // next available id
+    uint256 public nextId;
+
++   constructor() {
++       nextId = 1;
++   }
+```
 
 ### #3 Prefer Calldata For Array Inputs: EFFECTIVE 0.22% CHEAPER ###
 
