@@ -4,7 +4,7 @@ A collection of solidity gas optimization examples to see what works and what do
 
 ## Setup ##
 
-Ensure you are using a recent versions of [Foundry](https://github.com/foundry-rs/foundry) that supports Solidity >= 0.8.28.
+Ensure you are using a recent version of [Foundry](https://github.com/foundry-rs/foundry) that supports Solidity >= 0.8.28.
 
 Compile with: `forge build`
 
@@ -50,7 +50,8 @@ function generateIds(uint256 numIds, address[] calldata owners) external {
 -       uint256 newId = nextId;
 
         // update the mapping
-        idToOwner[newId] = owners[i];
+-       idToOwner[newId] = owners[i];
++       idToOwner[newId++] = owners[i];
 
 -       // update storage to increment next id
 -       nextId = newId + 1;
