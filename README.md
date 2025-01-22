@@ -63,7 +63,16 @@ function generateIds(uint256 numIds, address[] calldata owners) external {
 
 ### #5 Use Delete Instead Of Assignment To Default Value: NOT EFFECTIVE ###
 
-One suggestion is to use the `delete` keyword instead of assigning if the assignment would be to the default value, in order to obtain a gas refund. This appears to not be effective; assignment to the default value results in the same gas cost as using the `delete` keyword.
+One suggestion is to use the `delete` keyword instead of assigning if the assignment would be to the default value, in order to obtain a gas refund. This appears to not be effective; assignment to the default value results in the same gas cost as using the `delete` keyword:
+```solidity
+// both implementations cost the same gas
+function resetId(uint256 id) external {
+    idToOwner[id] = address(0);
+}
+function resetId(uint256 id) external {
+    delete idToOwner[id];
+}
+```
 
 ### #6 Don't Cache Calldata Length: EFFECTIVE 0.09% CHEAPER ###
 
