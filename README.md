@@ -14,13 +14,14 @@ Every test file has instructions on how to run the individual tests.
 
 ### #1 Don't Initialize To Default Value: NOT EFFECTIVE ###
 
-Solidity by default initializes variables to default values, so one common recommendation looks like this:
-```diff
-- for(uint256 i=0; i<numIds; i++) {
-+ for(uint256 i;   i<numIds; i++) {
+Solidity by default initializes variables to default values, so one common recommendation is to not initialize loop variables to their default value:
+```solidity
+// both implementations cost the same gas
+for(uint256 i=0; i<numIds; i++) {
+for(uint256 i;   i<numIds; i++) {
 ```
 
-But testing shows this suggestion is not cheaper regardless of whether the optimizer is enabled. The code without initialization may still be preferred for its succinctness.
+Testing shows this suggestion is not cheaper regardless of whether the optimizer is enabled. The code without initialization may still be preferred for its succinctness.
 
 ### #2 Initialize Past Default Value: EFFECTIVE 12% CHEAPER ###
 
