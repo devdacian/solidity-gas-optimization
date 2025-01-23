@@ -150,7 +150,7 @@ function sendETHToOwner() external virtual onlyOwner {
 ```
 
 ### #10 Use `SafeTransferLib::safeTransferETH` Instead Of Solidity `call()` : EFFECTIVE 0.35% CHEAPER ###
-When sending ETH, it is cheaper to use Solady [`safeTransferETH`](https://github.com/Vectorized/solady/blob/main/src/utils/SafeTransferLib.sol#L90-L98) function:
+When sending ETH, it is cheaper to use Solady's [`safeTransferETH`](https://github.com/Vectorized/solady/blob/main/src/utils/SafeTransferLib.sol#L90-L98) function:
 ```diff
 + import {SafeTransferLib} from "@solady/utils/SafeTransferLib.sol";
 
