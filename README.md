@@ -149,10 +149,10 @@ function sendETHToOwner() external virtual onlyOwner {
 }
 ```
 
-### #10 Use Solady `SafeTransferLib::safeTransferETH` Instead Of Solidity `call()` : EFFECTIVE 0.35% CHEAPER ###
-When sending ETH, it is cheaper to use Solady's `safeTransferETH` function:
+### #10 Use `SafeTransferLib::safeTransferETH` Instead Of Solidity `call()` : EFFECTIVE 0.35% CHEAPER ###
+When sending ETH, it is cheaper to use Solady [`safeTransferETH`](https://github.com/Vectorized/solady/blob/main/src/utils/SafeTransferLib.sol#L90-L98) function:
 ```diff
-+import {SafeTransferLib} from "@solady/utils/SafeTransferLib.sol";
++ import {SafeTransferLib} from "@solady/utils/SafeTransferLib.sol";
 
 function sendETHToOwner() external virtual onlyOwner {
     uint256 ethBal = address(this).balance;
