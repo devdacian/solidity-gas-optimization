@@ -137,7 +137,7 @@ function resetId(uint256 id) public {
 
 ### #9 Use `msg.sender` Instead Of `owner()`: EFFECTIVE 0.84% CHEAPER ###
 When `msg.sender` is guaranteed to be `owner()` such as inside `onlyOwner` functions, it is cheaper to use `msg.sender`:
-```solidity
+```diff
 function sendETHToOwner() external virtual onlyOwner {
     uint256 ethBal = address(this).balance;
 
@@ -145,6 +145,22 @@ function sendETHToOwner() external virtual onlyOwner {
 -       (bool sent, ) = owner().call{value: ethBal}("");
 +       (bool sent, ) = msg.sender.call{value: ethBal}("");
         if(!sent) revert EthTransferFailed();
+    }
+}
+```
+
+### #10 Use Solady `SafeTransferLib::safeTransferETH` Instead Of Solidity `call()` : EFFECTIVE 0.35% CHEAPER ###
+When sending ETH, it is cheaper to use Solady's `safeTransferETH` function:
+```diff
++import {SafeTransferLib} from "@solady/utils/SafeTransferLib.sol";
+
+function sendETHToOwner() external virtual onlyOwner {
+    uint256 ethBal = address(this).balance;
+
+    if(ethBal > 0) {
+-       (bool sent, ) = msg.sender.call{value: ethBal}("");
+-       if(!sent) revert EthTransferFailed();
++       SafeTransferLib.safeTransferETH(msg.sender, ethBal);
     }
 }
 ```
