@@ -176,7 +176,7 @@ if(ethBal != 0)
 ```
 
 ### #12 Use Solady `Ownable` Instead of OpenZeppelin: EFFECTIVE 0.03% -> 0.10% CHEAPER ###
-Using Solady `Ownable` instead of OpenZeppelin resulted in cheaper `onlyOwner` modifier execution by 0.03% with optimizer enabled and 0.10% with optimizer disabled:
+Using Solady [`Ownable`](https://github.com/Vectorized/solady/blob/main/src/auth/Ownable.sol) instead of OpenZeppelin resulted in cheaper `onlyOwner` modifier execution by 0.03% with optimizer enabled and 0.10% with optimizer disabled:
 ```solidity
 - import {Ownable} from "@openzeppelin/access/Ownable.sol";
 + import {Ownable} from "@solady/auth/Ownable.sol";
