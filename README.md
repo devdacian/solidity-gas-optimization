@@ -134,3 +134,19 @@ function resetId(uint256 id) public {
     idToOwner[id] = address(0);
 }
 ```
+
+### #9 Use `msg.sender` Instead Of `owner()`: EFFECTIVE 0.84% CHEAPER ###
+When `msg.sender` is guaranteed to be `owner()` such as inside `onlyOwner` functions, it is cheaper to use `msg.sender`:
+```solidity
+function sendETHToOwner() external virtual onlyOwner {
+    uint256 ethBal = address(this).balance;
+
+    if(ethBal > 0) {
+-       (bool sent, ) = owner().call{value: ethBal}("");
++       (bool sent, ) = msg.sender.call{value: ethBal}("");
+        if(!sent) revert EthTransferFailed();
+    }
+}
+```
+
+
