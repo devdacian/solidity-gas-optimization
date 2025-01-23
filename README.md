@@ -149,7 +149,7 @@ function sendETHToOwner() external virtual onlyOwner {
 }
 ```
 
-### #10 Use `SafeTransferLib::safeTransferETH` Instead Of Solidity `call()` : EFFECTIVE 0.35% CHEAPER ###
+### #10 Use `SafeTransferLib::safeTransferETH` Instead Of Solidity `call()`: EFFECTIVE 0.35% CHEAPER ###
 When sending ETH, it is cheaper to use Solady's [`safeTransferETH`](https://github.com/Vectorized/solady/blob/main/src/utils/SafeTransferLib.sol#L90-L98) function:
 ```diff
 + import {SafeTransferLib} from "@solady/utils/SafeTransferLib.sol";
@@ -165,4 +165,13 @@ function sendETHToOwner() external virtual onlyOwner {
 }
 ```
 
+### #11 Use `!= 0` Instead Of `> 0` For Unsigned: NOT EFFECTIVE ###
+Using `!= 0` or `> 0` costs the same gas providing no benefit:
+```solidity
+uint256 ethBal = address(this).balance;
+
+// both implementations cost the same gas
+if(ethBal > 0)
+if(ethBal != 0)
+```
 
