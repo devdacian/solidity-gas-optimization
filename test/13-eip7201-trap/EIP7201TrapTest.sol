@@ -23,8 +23,8 @@ import {EIP7201TrapFixed} from "../../src/13-eip7201-trap/EIP7201TrapFixed.sol";
 // passing them to child functions instead of re-reading them from storage
 // is significantly cheaper
 contract EIP7201TrapTest is Test {
-    EIP7201TrapUnop internal orderBookUnop;
-    EIP7201TrapFixed internal orderBookFixed;
+    IOrderBook internal orderBookUnop;
+    IOrderBook internal orderBookFixed;
 
     function setUp() external virtual {
         // create contracts being tested
