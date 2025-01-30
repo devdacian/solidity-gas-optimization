@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.28;
 
-import {IOrderBook} from "./Eip7201TrapUnop.sol";
+import {IOrderBook} from "./EIP7201TrapUnop.sol";
 
 contract EIP7201TrapFixed is IOrderBook {
     // EIP7201 Namespaced Storage Layout
