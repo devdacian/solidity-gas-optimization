@@ -184,3 +184,36 @@ Using Solady [`Ownable`](https://github.com/Vectorized/solady/blob/main/src/auth
 - constructor() Ownable(msg.sender) {}
 + constructor() { _initializeOwner(msg.sender); }
 ```
+
+### #13 Avoid The EIP7201 Trap: EFFECTIVE 9.45% -> 11.86% CHEAPER ###
+The [EIP7201](https://eips.ethereum.org/EIPS/eip-7201) Trap occurs when:
+* developers get into the habit of constantly calling an internal function to retrieve an EIP7201 storage reference
+* re-read the same storage values which haven't changed in throughout multiple child functions.
+
+An example using only 1 storage slot and a call stack based upon one of my private audits did this:
+```solidity
+- createOrder (2 storage reads)
+-- beforeOrderCheck (2 storage reads)
+--- beforeOrderCheckParent (1 storage read)
+-- _afterOrderCheck (1 storage read)
+--- _instantSettlement (1 storage read)
+---- _partialSettlement (1 storage read)
+```
+
+Each of the above functions was calling the internal function to retrieve an EIP7201 storage reference then re-reading the same storage slot which was never changed during the transaction!
+
+To avoid falling into the EIP7201 Trap, for each major protocol functionality:
+* identify which storage slots are not changed but only read for that functionality
+* read the storage slots once then pass the cached copies into child functions which also read them
+
+Again using only the 1 storage slot, this produces the following call stack:
+```solidity
+- createOrder (1 storage read)
+-- beforeOrderCheck(cache) (0 storage reads)
+--- beforeOrderCheckParent(cache) (0 storage read)
+-- _afterOrderCheck(cache) (0 storage read)
+--- _instantSettlement(cache) (0 storage read)
+---- _partialSettlement(cache) (0 storage read)
+```
+
+In our simplied example using only 1 storage slot the gas costs was 9.45% cheaper with optimizer enabled and 11.86% cheaper without the optimizer. In real-world protocols where multiple storage slots are not changed but frequently read the gas savings are likely to be even greater.
