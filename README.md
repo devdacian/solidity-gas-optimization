@@ -185,12 +185,12 @@ Using Solady [`Ownable`](https://github.com/Vectorized/solady/blob/main/src/auth
 + constructor() { _initializeOwner(msg.sender); }
 ```
 
-### #13 Avoid The EIP7201 Trap: EFFECTIVE 9.45% -> 11.86% CHEAPER ###
-The [EIP7201](https://eips.ethereum.org/EIPS/eip-7201) Trap occurs when:
+### #13 Avoid The EIP7201 Gas Trap: EFFECTIVE 9.45% -> 11.86% CHEAPER ###
+The [EIP7201](https://eips.ethereum.org/EIPS/eip-7201) Gas Trap occurs when:
 * developers get into the habit of constantly calling an internal function to retrieve an EIP7201 storage reference
 * re-read the same storage values which haven't changed in multiple child functions
 
-An example using only 1 storage slot and a call stack based upon one of my private audits:
+An example using only 1 storage slot and a call stack based on one of my private audits:
 ```solidity
 - createOrder (2 storage reads)
 -- beforeOrderCheck (2 storage reads)
@@ -202,7 +202,7 @@ An example using only 1 storage slot and a call stack based upon one of my priva
 
 Each of the above functions was calling the internal function to retrieve an EIP7201 storage reference then re-reading the same storage slot which was never changed during the transaction!
 
-To avoid falling into the EIP7201 Trap, for each major protocol functionality:
+To avoid falling into the EIP7201 Gas Trap, for each major protocol functionality:
 * identify which storage slots are not changed but only read for that functionality
 * read the storage slots once then pass the cached copies into child functions which also read them
 
