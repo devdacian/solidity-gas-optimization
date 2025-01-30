@@ -188,9 +188,9 @@ Using Solady [`Ownable`](https://github.com/Vectorized/solady/blob/main/src/auth
 ### #13 Avoid The EIP7201 Trap: EFFECTIVE 9.45% -> 11.86% CHEAPER ###
 The [EIP7201](https://eips.ethereum.org/EIPS/eip-7201) Trap occurs when:
 * developers get into the habit of constantly calling an internal function to retrieve an EIP7201 storage reference
-* re-read the same storage values which haven't changed in throughout multiple child functions.
+* re-read the same storage values which haven't changed in multiple child functions
 
-An example using only 1 storage slot and a call stack based upon one of my private audits did this:
+An example using only 1 storage slot and a call stack based upon one of my private audits:
 ```solidity
 - createOrder (2 storage reads)
 -- beforeOrderCheck (2 storage reads)
@@ -216,4 +216,4 @@ Again using only the 1 storage slot, this produces the following call stack:
 ---- _partialSettlement(cache) (0 storage read)
 ```
 
-In our simplied example using only 1 storage slot the gas costs was 9.45% cheaper with optimizer enabled and 11.86% cheaper without the optimizer. In real-world protocols where multiple storage slots are not changed but frequently read the gas savings are likely to be even greater.
+In our simplied example using only 1 storage slot the gas cost was 9.45% cheaper with optimizer enabled and 11.86% cheaper without the optimizer. In real-world protocols where multiple storage slots are not changed but frequently read the gas savings are likely to be even greater.
