@@ -217,3 +217,22 @@ Again using only the 1 storage slot, this produces the following call stack:
 ```
 
 In our simplied example using only 1 storage slot the gas cost was 9.45% cheaper with optimizer enabled and 11.86% cheaper without the optimizer. In real-world protocols where multiple storage slots are not changed but frequently read the gas savings are likely to be even greater.
+
+
+### #14 Modify Input Instead Of Temp Variable: EFFECTIVE 0.19% CHEAPER ###
+When an input variable's value doesn't need to be preserved, modifying that input variable is more efficient than using a temporary variable inside the function:
+```diff
+function returnLowest(uint256 input) external view returns(uint256 lowest) {
+    lowest = input;
+
+    uint256 compsLen = comps.length;
+    for(uint256 i; i<compsLen; i++) {
+-       uint256 temp = comps[i];
++       input = comps[i];
+
+        if(temp < lowest) {
+            lowest = temp;
+        }
+    }
+}
+```
